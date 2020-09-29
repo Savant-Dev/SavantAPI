@@ -1,0 +1,43 @@
+Front End:
+  - Products and Services
+  - Ordering / Contact Us
+  - About Me and Resume
+  - Developer Console (optional)
+
+Back End:
+  - Authentication API
+      + Restricted to only accept requests from current Host Machine IP
+      + Requires `client-id` in request header and `key` argument in URL
+      + API logs into a PostgreSQL database with the provided credentials
+      + Checks `client-secret` registration information, ensuring valid secret
+
+  - Savant Bot Data API
+      + Redirects request to Authentication API, ensuring credentials are valid
+      + Uses `client-id` and `client-secret` to log into PostgreSQL database
+      + Completes Transaction and responds with JSON data
+
+---------------------------------------------------------------------------------------
+
+This structure protects the authentication database from attacks, and only provides
+direct access to arbitrary and/or publicly accessible user data.
+
+Data not accessible via breach:
+  - User Email/Password or other Login Data
+  - Valid `client-id` and `client-secret` combinations
+  - User Payment Information
+  - User Address
+
+Data accessible via breach:
+  - Discord User ID **
+  - Certain, limited, activity logs for Discord
+      + Modmail Cases *
+      + Infraction Records *
+      + Leveling Profiles *
+      + Social Media Names (YouTube and Twitch) ***
+      + Various Event Timestamps (Joined, Role Duration, etc) *
+      + Current Number of messages sent (per server) *
+      + Current Total Time spent in Voice Channels (per server) *
+
+  * Information is arbitrary, or otherwise unable to be used for identification
+  ** Information is public, but can be used to identify the individual
+  *** Information can be used to identify the individual
